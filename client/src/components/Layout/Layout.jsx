@@ -16,7 +16,7 @@ const Layout = ({ children, title, description, keywords, author }) => {
         <meta name="author" content={author} />
       </Helmet>
       <Navbar />
-      <main className="bg-stone-900 text-emerald-200 min-h-[69vh]">
+      <main className="bg-stone-900 text-emerald-200 min-h-[75vh]">
         {children}
       </main>
       <Footer />
