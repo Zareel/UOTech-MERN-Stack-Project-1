@@ -57,7 +57,7 @@ const Login = () => {
               }}
               placeholder="Email"
               required
-              className="w-[50%] lgw-[30%] bg-gray-700 text-white margin-none outline-none px-6 py-2 rounded-md tracking-wider font-semibold"
+              className="w-[50%] lg:w-[30%] bg-gray-700 text-white margin-none outline-none px-6 py-2 rounded-md tracking-wider font-semibold"
             />
             <input
               name={password}
