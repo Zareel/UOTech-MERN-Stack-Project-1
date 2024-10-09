@@ -6,18 +6,20 @@ import slugify from "slugify";
 export const createProduct = async (req, res) => {
   try {
     //get info from frontend. As we have installed formidable we will grab info from `req.fields` instead of `req.body`
-    const { name, description, price, category, quantity, shipping } =
+    const { name, description, price, collection, quantity, shipping } =
       req.fields;
     const { photo } = req.files;
     //validation
     if (!name || !description || !price) {
-      return res.status(404).json({
+      return res.status(400).json({
         success: false,
         message: "Please fill all the fields",
       });
     } //photo validation (1MB)
+    // 1MB = 1024 KiloBytes
+    // 1MB = 1000000 Bytes
     if (!photo && photo.size > 1000000) {
-      return res.status(500).json({
+      return res.status(400).json({
         success: false,
         message: "Photo is required and should be less than 1mb",
       });
@@ -31,6 +33,7 @@ export const createProduct = async (req, res) => {
       product.photo.contentType = photo.type;
     }
     await product.save();
+    
     res.status(201).json({
       success: true,
       message: "Product Created Successfully",
@@ -129,11 +132,12 @@ export const deleteProduct = async (req, res) => {
   }
 };
 
+
 //udateProduct
 export const updateProduct = async (req, res) => {
   try {
     //get info from frontend. As we have installed formidable we will grab info from `req.fields` instead of `req.body`
-    const { name, description, price, category, quantity, shipping } =
+    const { name, description, price, collection, quantity, shipping } =
       req.fields;
     const { photo } = req.files;
     //validation

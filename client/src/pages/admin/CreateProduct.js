@@ -24,7 +24,7 @@ const CreateProduct = () => {
       const { data } = await axios.get("/api/v1/collection/get-collection");
       if (data && data.success) {
         toast.success(data.message);
-        setCollections(data.collection);
+        setCollections(data?.collection);
       }
     } catch (error) {
       console.log(error);
@@ -69,7 +69,6 @@ const CreateProduct = () => {
           <h1 className="text-3xl text-cyan-500">Cereate Product</h1>
           <form>
             <Select
-              bordererd
               placeholder="Select a collection"
               size="large"
               showSearch
@@ -80,7 +79,7 @@ const CreateProduct = () => {
             >
               {collections &&
                 collections.map((item) => (
-                  <Option key={item._id} value={item.id}>
+                  <Option key={item._id} value={item._id}>
                     {item.name}
                   </Option>
                 ))}
@@ -116,7 +115,7 @@ const CreateProduct = () => {
                   value={name}
                   placeholder="Enter name"
                   onChange={(e) => setName(e.target.value)}
-                  className="w-[400px] ps-4 py-2 rounded-md mt-4 bg-gray-700 border-none outline-none"
+                  className="w-[400px] px-4 py-2 rounded-md mt-4 bg-gray-700 border-none outline-none"
                 />
                 <textarea
                   cols={56}
@@ -125,14 +124,14 @@ const CreateProduct = () => {
                   value={description}
                   placeholder="Description"
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-[400px] ps-4 py-2 rounded-md mt-4 bg-gray-700 border-none outline-none"
+                  className="w-[400px] px-4 py-2 rounded-md mt-4 bg-gray-700 border-none outline-none"
                 />
                 <input
                   type="number"
                   value={price}
                   placeholder="Price"
                   onChange={(e) => setPrice(e.target.value)}
-                  className="w-[400px] ps-4 py-2 rounded-md mt-4 bg-gray-700 border-none outline-none"
+                  className="w-[400px] px-4 py-2 rounded-md mt-4 bg-gray-700 border-none outline-none"
                 />
                 <input
                   type="number"
@@ -144,7 +143,6 @@ const CreateProduct = () => {
               </div>
               <div>
                 <Select
-                  bordererd
                   placeholder="Select Shpping"
                   size="large"
                   showSearch

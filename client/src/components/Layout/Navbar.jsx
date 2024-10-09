@@ -87,7 +87,7 @@ const handleLogout = async() => {
                     {auth.user.role} <ArrowDropDownIcon />
                   </p>
                   {openMenu ? (
-                    <div className="flex flex-col absolute top-20 left-10 gap-4 text-lg ">
+                    <div className="flex flex-col absolute top-0 lg:top-10 right-36 lg:left-10 gap-4 text-lg ">
                       <Link
                         to={`/dashboard/${
                           auth.user.role === "ADMIN" ? "admin" : "user"

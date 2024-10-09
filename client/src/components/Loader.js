@@ -3,7 +3,7 @@ import Layout from "./Layout/Layout";
 import { useNavigate, useLocation} from "react-router-dom";
 
 const Loader = ({path = "login"}) => {
-  const [count, setCount] = useState(5);
+  const [count, setCount] = useState(2);
   const navigate = useNavigate();
   const location = useLocation()
 

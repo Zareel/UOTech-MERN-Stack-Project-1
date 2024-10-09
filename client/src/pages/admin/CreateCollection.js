@@ -50,6 +50,7 @@ const CreateCollection = () => {
       if (data.success) {
         setCollection(data.collection);
       }
+      
     } catch (error) {
       console.log(error);
       toast.error(`Something went wrong in getting collection ${error}`);
@@ -72,6 +73,7 @@ const CreateCollection = () => {
         setSelected(null);
         setUpdatedName("");
         handleCancel();
+        handleOk()
         getAllCollection();
         toast.success(data.message)
       } else {
@@ -153,8 +155,8 @@ const CreateCollection = () => {
         <Modal
           onCancel={() => setIsModalOpen(false)}
           footer={null}
-          visible={isModalOpen}
-          title="Basic Modal"
+          open={isModalOpen}
+          title="Update Collection"
         >
           <CollectionForm
             value={updatedName}

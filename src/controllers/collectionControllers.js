@@ -1,4 +1,3 @@
-import e from "express";
 import Collection from "../models/collectionSchema.js";
 import slugify from "slugify";
 
@@ -7,7 +6,7 @@ export const createCollection = async (req, res) => {
   try {
     const { name } = req.body;
     if (!name) {
-      return res.status(401).json({
+      return res.status(400).json({
         success: false,
         message: "Please provide collection name",
       });
@@ -48,7 +47,7 @@ export const updateCollection = async (req, res) => {
     );
     res.status(200).json({
       success: true,
-      message: "New Collection has been created successfully",
+      message: "Collection has been updated successfully",
       collection,
     });
   } catch (error) {
@@ -67,7 +66,7 @@ export const getCollection = async (req, res) => {
     const collection = await Collection.find({});
     res.status(200).json({
       success: true,
-      count:collection.length,
+      count: collection.length,
       message: "Collection has been fetched successfully",
       collection,
     });
@@ -82,25 +81,25 @@ export const getCollection = async (req, res) => {
 };
 
 //get-single-collection || method:get || /api/vi/collection/single-collection
-export const singleCollection = async(req, res) => {
-  try{
+export const singleCollection = async (req, res) => {
+  try {
     //as we can get slug from the url, lets use slug to target partucular collection. this time lets try to pass it directcly instead of destructuring
     //const {slug} = req.params
-    const collection = await Collection.findOne({slug:req.params.slug})
+    const collection = await Collection.findOne({ slug: req.params.slug });
     res.status(200).json({
-      success:true,
-      message:"Collection has been fetched successfully",
-      collection
-    })
-
-  }catch(error){
+      success: true,
+      message: "Collection has been fetched successfully",
+      collection,
+    });
+  } catch (error) {
     console.log(`Error in fetching single collection`),
-    res.status(500).json({
-      success:false,
-      message:"Error in fetching single collection",
-      error
-    })  }
-}
+      res.status(500).json({
+        success: false,
+        message: "Error in fetching single collection",
+        error,
+      });
+  }
+};
 
 // deletecollection || method:delete || /api/v1/categoru/delete-collection
 export const deleteCollection = async (req, res) => {
