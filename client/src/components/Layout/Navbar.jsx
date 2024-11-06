@@ -56,15 +56,15 @@ const handleLogout = async() => {
           ClickToCart
         </h1>
         <div className="flex items-center">
-        <div className="flex gap-2 lg:gap-6 items-center py-2">
-        <Link to="/" className="text-2xl">
-        Home
-      </Link>
+          <div className="flex gap-2 lg:gap-6 items-center py-2">
+            <Link to="/" className="text-2xl">
+              Home
+            </Link>
 
-      <p className="flex items-center px-4 pr-6 font-poppins text-2xl font-semibold text-pink-400 cursor-pointer">
-        {auth.user && auth.user.name}
-      </p>
-        </div>
+            <p className="flex items-center px-4 pr-6 font-poppins text-2xl font-semibold text-pink-400 cursor-pointer">
+              {auth.user && auth.user.name}
+            </p>
+          </div>
           <ul
             className={`lg:static absolute flex flex-col lg:flex-row gap-6 text-xl duration-500 ${
               extendNavbar ? "top-24 right-10" : "top-24 right-[-100px]"
@@ -115,8 +115,6 @@ const handleLogout = async() => {
             )}
           </ul>
           <div className={`flex gap-6 py-2 items-center`}>
-         
-
             <div
               className="lg:hidden "
               onClick={() => {

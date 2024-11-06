@@ -1,23 +1,27 @@
 import React, {useContext} from 'react'
-import Layout from '../../components/Layout/Layout'
-import AdminMenu from '../../components/Layout/AdminMenu'
 import AuthContext from '../../context/authContext'
 
 const AdminnDashboard = () => {
   const {auth} = useContext(AuthContext)
   return (
-    <Layout>
-    <div className="w-full h-full py-16">
+    <div>
+    <div className="w-full h-full ">
       <div className="max-w-7xl mx-auto flex gap-10">
-        <div>
-          <AdminMenu />
-        </div>
+        
         <div className="py-6">
           <div>
           <span className="text-xl w-56  text-gray-400">
             Name:
-            <span className=" text-2xl text-pink-400  font-semibold tracki w-56 uppercase ml-6">
+            <span className=" text-xl text-pink-400  font-semibold tracki w-56 uppercase ml-6">
               {auth.user.name}
+            </span>
+          </span>
+          </div>
+          <div>
+          <span className="text-xl w-56  text-gray-400">
+            Role:
+            <span className=" text-2xl text-cyan-400  font-semibold tracki w-56 uppercase ml-6">
+              {auth.user.role}
             </span>
           </span>
           </div>
@@ -49,7 +53,7 @@ const AdminnDashboard = () => {
         </div>
       </div>
     </div>
-  </Layout>
+  </div>
   )
 }
 

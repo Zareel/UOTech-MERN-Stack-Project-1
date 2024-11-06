@@ -1,16 +1,15 @@
 import { useState, useContext, useEffect } from "react";
 import AuthContext from "../../context/authContext";
-import axios from "axios";
 import { Outlet } from "react-router-dom";
 import Loader from "../Loader";
+import axios from "axios";
 
-export const AdminRoute = () => {
+export default function UserRoute() {
   const [ok, setOk] = useState(false);
   const { auth } = useContext(AuthContext);
-
   useEffect(() => {
     const authCheck = async () => {
-      const { data } = await axios.get("/api/v1/auth/admin-auth");
+      const { data } = await axios.get("/api/v1/auth/user-auth");
       if (data.ok) {
         setOk(true);
       } else {
@@ -20,5 +19,5 @@ export const AdminRoute = () => {
     if (auth?.token) authCheck();
   }, [auth?.token]);
 
-  return ok ? <Outlet /> : <Loader path="" />;
-};
+  return ok ? <Outlet /> : <Loader />;
+}

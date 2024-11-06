@@ -20,7 +20,7 @@ router.post("/login", login);
 //logout || method:post
 router.post("/logout", logOut);
 
-//middelware text route
+//middelware test route
 router.get("/test", isLoggedIn, isAdmin, testController);
 export default router;
 

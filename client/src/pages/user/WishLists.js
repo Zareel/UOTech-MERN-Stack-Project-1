@@ -1,12 +1,12 @@
 import React from 'react'
 import UserMenu from '../../components/UserMenu'
 
-const Profile = () => {
+const WishLists = () => {
   return (
     <div>
     <UserMenu/>
-    Profile</div>
+    WishLists</div>
   )
 }
 
-export default Profile
+export default WishLists

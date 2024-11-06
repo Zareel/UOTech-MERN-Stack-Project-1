@@ -1,10 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Layout from '../components/Layout/Layout'
 
 const Error = () => {
   return (
-    <Layout title={"Error-ClickToCart"}>
+    <div>
     <section className="flex items-center h-full p-16 dark:bg-stone-900 dark:text-gray-100">
 	<div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">
 		<div className="max-w-md text-center">
@@ -17,7 +16,7 @@ const Error = () => {
 		</div>
 	</div>
 </section>
-    </Layout>
+    </div>
 
   )
 }

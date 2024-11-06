@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import Layout from "../components/Layout/Layout";
 import { toast } from "sonner";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import MenuIcon from '@mui/icons-material/Menu';
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -37,7 +35,7 @@ const SignUp = () => {
     }
   };
   return (
-    <Layout title={"SignUp-ClickToCart"}>
+    <div>
       <div className="w-full h-full py-6">
         <div className="max-w-7xl mx-auto flex flex-col items-center justify-center">
           <h1 className="text-4xl font-semibold font-roboto text-cyan-500 cursor-pointer py-6">
@@ -110,7 +108,7 @@ const SignUp = () => {
         
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 

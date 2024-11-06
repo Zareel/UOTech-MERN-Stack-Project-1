@@ -164,7 +164,7 @@ export const logOut = async (req, res) => {
 
 /*
  * test
- * route: http://localhost:4000/api/v1/auth/text
+ * route: http://localhost:4000/api/v1/auth/test
  * description: for testing the middleware
  */
 

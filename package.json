@@ -9,12 +9,12 @@
     "server": "nodemon server.js",
     "client": "npm start --prefix ./client",
     "dev": "concurrently \"npm run start\" \"npm run client\"",
-    "build":"npm install --prefix ./client && npm run build --prefix ./client && npm install"
+    "build": "npm install --prefix ./client && npm run build --prefix ./client && npm install"
   },
   "author": "zareel",
   "license": "ISC",
   "dependencies": {
-  
+    "antd": "^5.21.4",
     "bcrypt": "^5.1.1",
     "colors": "^1.4.0",
     "concurrently": "^8.2.2",
