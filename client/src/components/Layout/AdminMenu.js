@@ -23,6 +23,12 @@ const AdminMenu = () => {
               Create Product
             </Link>
             <Link
+            to="/dashboard/admin/products"
+            className="text-xl text-gray-500 hover:text-gray-300 cursor-pointer"
+          >
+            Products
+          </Link>
+            <Link
               to="/dashboard/admin/users"
               className="text-xl text-gray-500 hover:text-gray-300 cursor-pointer"
             >

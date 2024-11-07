@@ -96,7 +96,7 @@ const handleLogout = async() => {
                       >
                         Dashboard
                       </Link>
-                      <p className="cursor-pointer ">Profile</p>
+                      <Link to="/dashboard/user/profile" className="cursor-pointer ">Profile</Link>
                     </div>
                   ) : (
                     ""

@@ -3,11 +3,11 @@ import Layout from "../../components/Layout/Layout";
 import AdminMenu from "../../components/Layout/AdminMenu";
 import { toast } from "sonner";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Select } from "antd";
 const { Option } = Select;
 
-const CreateProduct = () => {
+const UpdateProduct = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -16,7 +16,31 @@ const CreateProduct = () => {
   const [quantity, setQuantity] = useState("");
   const [photo, setPhoto] = useState("");
   const [shipping, setShipping] = useState(false);
+  const [id, setId] = useState("");
   const navigate = useNavigate();
+  const params = useParams();
+
+  //   get single product
+  const getSingleProduct = async () => {
+    try {
+      const { data } = await axios.get(
+        `/api/v1/product/get-product/${params.slug}`
+      );
+      setName(data.product.name);
+      setId(data.product._id);
+      setDescription(data.product.description);
+      setCollection(data.product.collection._id);
+      setPrice(data.product.price);
+      setQuantity(data.product.quantity);
+      setShipping(data.product.shipping);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getSingleProduct();
+    //eslint-disable-next-line
+  }, []);
 
   // get all collection
   const getAllCollection = async () => {
@@ -37,7 +61,7 @@ const CreateProduct = () => {
   }, []);
 
   // create product function
-  const handleCreate = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
     try {
       const productData = new FormData();
@@ -45,9 +69,13 @@ const CreateProduct = () => {
       productData.append("description", description);
       productData.append("price", price);
       productData.append("quantity", quantity);
-      productData.append("photo", photo);
-      productData.append("collection", collection)
-      const { data } = await axios.post("/api/v1/product/create-product", productData);
+      photo && productData.append("photo", photo);
+      productData.append("collection", collection);
+
+      const { data } = await axios.put(
+        `/api/v1/product/udpate-product/${id}`,
+        productData
+      );
       if (data?.success) {
         toast.success(data?.message);
         navigate("/dashboard/admin/products");
@@ -59,6 +87,52 @@ const CreateProduct = () => {
       toast.error(`Something went wrong ${error}`);
     }
   };
+  // const handleUpdate = async (e) => {
+  //     e.preventDefault();
+  //     try {
+  //       const productData = new FormData();
+  //       productData.append("name", name);
+  //       productData.append("description", description);
+  //       productData.append("price", price);
+  //       productData.append("quantity", quantity);
+  //       photo && productData.append("photo", photo);
+  //       productData.append("collection", collection);
+  //       const { data } = axios.put(
+  //         `/api/v1/product/update-product/${id}`,
+  //         productData
+  //       );
+  //       if (data?.success) {
+  //         toast.error(data?.message);
+  //       } else {
+  //         toast.success("Product Updated Successfully");
+  //         navigate("/dashboard/admin/products");
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //       toast.error("something went wrong");
+  //     }          
+  //   };
+
+  // delete product
+  const handleDelete = async () => {
+    try {
+      let answer = window.prompt("Are You Sure want to delete this product ? ");
+      if (!answer) return;
+      const { data } = await axios.delete(
+        `/api/v1/product/delete-product/${id}`
+      );
+      if(data.success){
+        toast.success(data.message);
+      navigate("/dashboard/admin/products");
+      }else{
+        toast.error(data.message);
+      }
+      
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
   return (
     <Layout>
       <div className="max-w-7xl mx-auto py-16 flex">
@@ -66,7 +140,7 @@ const CreateProduct = () => {
           <AdminMenu />
         </div>
         <div className="flex flex-col gap-6">
-          <h1 className="text-3xl text-cyan-500">Create Product</h1>
+          <h1 className="text-3xl text-cyan-500">Update Product</h1>
           <form>
             <Select
               placeholder="Select a collection"
@@ -76,6 +150,7 @@ const CreateProduct = () => {
               onChange={(value) => {
                 setCollection(value);
               }}
+              value={collection}
             >
               {collections &&
                 collections.map((item) => (
@@ -98,10 +173,18 @@ const CreateProduct = () => {
               </label>
             </div>
             <div className="mt-6">
-              {photo && (
+              {photo ? (
                 <div>
                   <img
                     src={URL.createObjectURL(photo)}
+                    alt="img_product"
+                    className="h-[200px]"
+                  />
+                </div>
+              ) : (
+                <div>
+                  <img
+                    src={`/api/v1/product/product-photo/${id}`}
                     alt="img_product"
                     className="h-[200px]"
                   />
@@ -150,6 +233,7 @@ const CreateProduct = () => {
                     setShipping(value);
                   }}
                   className="w-[400px] border-none outline-none mt-6 bg-gray-700"
+                  value={shipping ? "Yes" : "No"}
                 >
                   <Option value="0">No</Option>
                   <Option value="1">Yes</Option>
@@ -157,10 +241,16 @@ const CreateProduct = () => {
               </div>
               <div className="mt-6">
                 <button
-                  className="bg-sky-900 px-6 py-2 rounded-md"
-                  onClick={handleCreate}
+                  className="bg-sky-900 hover:bg-sky-800 px-6 py-2 rounded-md"
+                  onClick={handleUpdate}
                 >
-                  Create Product
+                  Update Product
+                </button>
+                <button
+                  className="bg-sky-900 hover:bg-sky-800 px-6 py-2 rounded-md"
+                  onClick={handleDelete}
+                >
+                  Delete Product
                 </button>
               </div>
             </div>
@@ -171,4 +261,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default UpdateProduct;

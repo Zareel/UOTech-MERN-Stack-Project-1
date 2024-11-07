@@ -93,7 +93,7 @@ export const getSingleProduct = async (req, res) => {
   }
 };
 
-//prouductPhot
+//prouductPhoto
 export const productPhoto = async (req, res) => {
   try {
     const product = await Product.findById(req.params.pid).select("photo");
