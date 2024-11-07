@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import Layout from "../components/Layout/Layout";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import AuthContext from "../context/authContext";
@@ -38,7 +37,7 @@ const Login = () => {
     }
   };
   return (
-    <Layout title={"Login-ClickToCart"}>
+    <div>
       <div className="w-full h-full py-6">
         <div className="max-w-7xl mx-auto flex flex-col items-center justify-center">
           <h1 className="text-4xl font-semibold font-roboto text-cyan-500 cursor-pointer py-6">
@@ -77,7 +76,7 @@ const Login = () => {
           </form>
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 

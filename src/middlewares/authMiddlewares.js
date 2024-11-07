@@ -32,7 +32,7 @@ export const isLoggedIn = async (req, res, next) => {
 //isLoggedIn
 export const isLoggedIn = (req, res, next) => {
   try {
-    const decode = JWT.verify(req.headers.authorization, config.JWT_SECRET);
+    const decode =JWT.verify(req.headers.authorization, config.JWT_SECRET);
     req.user = decode;
     next();
   } catch (error) {

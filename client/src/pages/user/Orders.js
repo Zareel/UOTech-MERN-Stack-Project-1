@@ -1,9 +1,11 @@
 import React from 'react'
-import Layout from '../../components/Layout/Layout'
+import UserMenu from '../../components/UserMenu'
 
 const Orders = () => {
   return (
-    <Layout>Orders</Layout>
+    <div>
+    <UserMenu/>
+    Orders</div>
   )
 }
 

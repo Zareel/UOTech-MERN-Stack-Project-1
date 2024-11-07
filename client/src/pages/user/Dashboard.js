@@ -1,5 +1,4 @@
 import React, {useContext} from 'react'
-import Layout from '../../components/Layout/Layout'
 import AuthContext from "../../context/authContext";
 import UserMenu from '../../components/Layout/UserMenu';
 
@@ -7,7 +6,7 @@ import UserMenu from '../../components/Layout/UserMenu';
 const Dashboard = () => {
   const { auth } = useContext(AuthContext);
   return (
-    <Layout title={"Dashboard-ClickToCart"}>
+    <div title={"Dashboard-ClickToCart"}>
     <div className="w-full h-full py-16">
     <div className="max-w-7xl mx-auto flex gap-10">
       <div>
@@ -41,7 +40,7 @@ const Dashboard = () => {
       </div>
     </div>
   </div>
-    </Layout>
+    </div>
   )
 }
 

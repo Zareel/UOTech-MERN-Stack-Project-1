@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../../components/Layout/Layout";
-import AdminMenu from "../../components/Layout/AdminMenu";
 import { toast } from "sonner";
 import axios from "axios";
-import EditIcon from "@mui/icons-material/Edit";
+import CollectionForm from "../../components/form/CollectionForm";
 import DeleteIcon from "@mui/icons-material/Delete";
-import CollectionForm from "../../components/Form/CollectionForm";
+import EditIcon from "@mui/icons-material/Edit";
 import { Modal } from "antd";
 
 const CreateCollection = () => {
@@ -15,14 +13,19 @@ const CreateCollection = () => {
   const [selected, setSelected] = useState(null);
   const [updatedName, setUpdatedName] = useState("");
 
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
   const handleOk = () => {
     setIsModalOpen(false);
   };
+
   const handleCancel = () => {
     setIsModalOpen(false);
   };
 
-  //handle form
+  //handle submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -30,16 +33,16 @@ const CreateCollection = () => {
         "/api/v1/collection/create-collection",
         { name }
       );
-      if (data && data.success) {
+      if (data.success) {
         toast.success(data.message);
         getAllCollection();
         setName("");
       } else {
-        toast.error(data.error);
+        toast.error(data.message);
       }
     } catch (error) {
-      console.log(`Error in creating collection ${error}`);
-      toast.error(`Something went wrong while creating collection ${error}`);
+      console.log(error);
+      toast.error("Something went wrong while creating collection");
     }
   };
 
@@ -50,7 +53,6 @@ const CreateCollection = () => {
       if (data.success) {
         setCollection(data.collection);
       }
-      
     } catch (error) {
       console.log(error);
       toast.error(`Something went wrong in getting collection ${error}`);
@@ -60,7 +62,7 @@ const CreateCollection = () => {
     getAllCollection();
   }, []);
 
-  // update collection
+  //update Collection
   //handleUpdate
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -73,99 +75,92 @@ const CreateCollection = () => {
         setSelected(null);
         setUpdatedName("");
         handleCancel();
-        handleOk()
+        handleOk();
         getAllCollection();
-        toast.success(data.message)
+        toast.success(data.message);
       } else {
-        alert(data && data.message);
+        toast.error(data.message);
       }
     } catch (error) {
-      alert("Something went wrong in handleUpdate functionality");
+      console.log(error);
+      toast.error(`Something went wrong while updating collection ${error}`);
     }
   };
 
-  // handle Delete
-  const handleDelete = async(id) => {
-    try{
-      const {data} = await axios.delete(`/api/v1/collection/delete-collection/${id}`)
-      if(data.success){
-        toast.success(data.message)
-      getAllCollection()
-      }else{
-        toast.error(data.message)
+  //handle delete
+  const handleDelete = async (id) => {
+    try {
+      const { data } = await axios.delete(
+        `/api/v1/collection/delete-collection/${id}`
+      );
+      if (data.success) {
+        toast.success(data.message);
+        getAllCollection();
+      } else {
+        toast.error(data.message);
       }
-
-    }catch(error){
+    } catch (error) {
       console.log(error);
-      toast.error(`Something went wrong ${error}`)
+      toast.error(`Something went wrong while deleting collection ${error}`);
     }
-  }
- 
+  };
   return (
-    <Layout>
-      <div className="max-w-7xl mx-auto h-full py-16 flex">
-        <div className="">
-          <AdminMenu />
-        </div>
-        <div className="flex flex-col gap-6">
-          <h1 className="text-3xl text-cyan-500">Manage Collection</h1>
-          <div>
-            <CollectionForm
-              handleSubmit={handleSubmit}
-              value={name}
-              setValue={setName}
-            />
-          </div>
-          <table className="min-w-[500px] text-lg border">
-            <thead className="rounded-t-lg dark:bg-gray-700 border">
-              <tr className="text-right">
-                <th title="Ranking" className="p-3 text-left">
-                  name
-                </th>
-                <th title="Team name" className="p-3 text-left">
-                  action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {collection &&
-                collection.map((item) => (
-                  <tr className="border">
-                    <td className="border" key={item._id}>
-                      {item.name}
-                    </td>
-                    <td>
-                      <div className="flex gap-6">
-                        <EditIcon
-                          className="cursor-pointer hover:text-yellow-300"
-                          onClick={() => {
-                            setIsModalOpen(true);
-                            setUpdatedName(item.name);
-                            setSelected(item);
-                          }}
-                        />
-                        <DeleteIcon className="hover:text-red-500" onClick={() => {handleDelete(item._id)}} />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
-        <Modal
-          onCancel={() => setIsModalOpen(false)}
-          footer={null}
-          open={isModalOpen}
-          title="Update Collection"
-        >
-          <CollectionForm
-            value={updatedName}
-            setValue={setUpdatedName}
-            handleSubmit={handleUpdate}
-          />
-        </Modal>
+    <div className="max-w-7xl mx-auto">
+      <h1 className="text-3xl text-cyan-500 py-6">Create Collection</h1>
+      <div>
+        <CollectionForm
+          handleSubmit={handleSubmit}
+          value={name}
+          setValue={setName}
+        />
       </div>
-    </Layout>
+      <div>
+        <table className="min-w-[500px] text-lg border ">
+          <thead className="rounded-t-lg dark:bg-gray-700 border">
+            <tr>
+              <th>Name</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {collection &&
+              collection.map((item) => (
+                <tr className="border">
+                  <td className="border pl-4" key={item._id}>
+                    {item.name}
+                  </td>
+                  <td className="flex gap-6 pl-4">
+                    <EditIcon
+                      onClick={() => {
+                        setIsModalOpen(true);
+                        setUpdatedName(item.name);
+                        setSelected(item);
+                      }}
+                    />
+                    <DeleteIcon
+                      onClick={() => {
+                        handleDelete(item._id);
+                      }}
+                    />
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
+      <Modal
+        title="Update Collection"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <CollectionForm
+          value={updatedName}
+          setValue={setUpdatedName}
+          handleSubmit={handleUpdate}
+        />
+      </Modal>
+    </div>
   );
 };
 
